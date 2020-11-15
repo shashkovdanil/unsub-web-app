@@ -1,5 +1,5 @@
-import '../styles/globals.css'
-import { init } from '../lib/sentry'
+import 'styles/globals.css'
+import { init } from 'lib/sentry'
 
 init()
 

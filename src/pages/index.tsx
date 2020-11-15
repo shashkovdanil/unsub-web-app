@@ -60,9 +60,13 @@ export default function Home() {
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
-      <button onClick={() => {
-        (window as any).localStorage()
-      }}>Sentry test</button>
+      <button
+        onClick={() => {
+          ;(window as any).localStorage()
+        }}
+      >
+        Sentry test
+      </button>
     </div>
   )
 }

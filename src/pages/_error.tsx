@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next'
-import NextErrorComponent, { ErrorProps } from 'next/error'
+import NextError, { ErrorProps } from 'next/error'
 import * as Sentry from '@sentry/node'
 
 const CustomError = ({ statusCode, hasGetInitialPropsRun, err }) => {
@@ -7,7 +7,7 @@ const CustomError = ({ statusCode, hasGetInitialPropsRun, err }) => {
     Sentry.captureException(err)
   }
 
-  return <NextErrorComponent statusCode={statusCode} />
+  return <NextError statusCode={statusCode} />
 }
 
 type ExtErrorProps = ErrorProps & {
@@ -15,7 +15,9 @@ type ExtErrorProps = ErrorProps & {
 }
 
 CustomError.getInitialProps = async (ctx: NextPageContext) => {
-  const errorInitialProps = await NextErrorComponent.getInitialProps(ctx) as ExtErrorProps
+  const errorInitialProps = (await NextError.getInitialProps(
+    ctx,
+  )) as ExtErrorProps
 
   errorInitialProps.hasGetInitialPropsRun = true
 
@@ -28,7 +30,7 @@ CustomError.getInitialProps = async (ctx: NextPageContext) => {
   }
 
   Sentry.captureException(
-    new Error(`_error.js getInitialProps missing data at path: ${ctx.asPath}`)
+    new Error(`_error.js getInitialProps missing data at path: ${ctx.asPath}`),
   )
   await Sentry.flush(2000)
 
